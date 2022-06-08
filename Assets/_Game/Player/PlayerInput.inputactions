@@ -2,7 +2,7 @@
     "name": "PlayerInput",
     "maps": [
         {
-            "name": "CharacterControls1",
+            "name": "CharacterControls",
             "id": "d9be1231-19b2-42a9-92ea-0c684edc41b6",
             "actions": [
                 {
@@ -18,7 +18,7 @@
                 {
                     "name": "",
                     "id": "f37b473e-acf0-47e2-826c-befd3b159cda",
-                    "path": "<AndroidJoystick>/stick",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

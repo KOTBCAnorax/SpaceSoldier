@@ -15,7 +15,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     ""name"": ""PlayerInput"",
     ""maps"": [
         {
-            ""name"": ""CharacterControls1"",
+            ""name"": ""CharacterControls"",
             ""id"": ""d9be1231-19b2-42a9-92ea-0c684edc41b6"",
             ""actions"": [
                 {
@@ -31,7 +31,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f37b473e-acf0-47e2-826c-befd3b159cda"",
-                    ""path"": ""<AndroidJoystick>/stick"",
+                    ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -99,9 +99,9 @@ public class @PlayerInput : IInputActionCollection, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // CharacterControls1
-        m_CharacterControls1 = asset.FindActionMap("CharacterControls1", throwIfNotFound: true);
-        m_CharacterControls1_Run = m_CharacterControls1.FindAction("Run", throwIfNotFound: true);
+        // CharacterControls
+        m_CharacterControls = asset.FindActionMap("CharacterControls", throwIfNotFound: true);
+        m_CharacterControls_Run = m_CharacterControls.FindAction("Run", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -148,29 +148,29 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         asset.Disable();
     }
 
-    // CharacterControls1
-    private readonly InputActionMap m_CharacterControls1;
-    private ICharacterControls1Actions m_CharacterControls1ActionsCallbackInterface;
-    private readonly InputAction m_CharacterControls1_Run;
-    public struct CharacterControls1Actions
+    // CharacterControls
+    private readonly InputActionMap m_CharacterControls;
+    private ICharacterControlsActions m_CharacterControlsActionsCallbackInterface;
+    private readonly InputAction m_CharacterControls_Run;
+    public struct CharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
-        public CharacterControls1Actions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Run => m_Wrapper.m_CharacterControls1_Run;
-        public InputActionMap Get() { return m_Wrapper.m_CharacterControls1; }
+        public CharacterControlsActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Run => m_Wrapper.m_CharacterControls_Run;
+        public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(CharacterControls1Actions set) { return set.Get(); }
-        public void SetCallbacks(ICharacterControls1Actions instance)
+        public static implicit operator InputActionMap(CharacterControlsActions set) { return set.Get(); }
+        public void SetCallbacks(ICharacterControlsActions instance)
         {
-            if (m_Wrapper.m_CharacterControls1ActionsCallbackInterface != null)
+            if (m_Wrapper.m_CharacterControlsActionsCallbackInterface != null)
             {
-                @Run.started -= m_Wrapper.m_CharacterControls1ActionsCallbackInterface.OnRun;
-                @Run.performed -= m_Wrapper.m_CharacterControls1ActionsCallbackInterface.OnRun;
-                @Run.canceled -= m_Wrapper.m_CharacterControls1ActionsCallbackInterface.OnRun;
+                @Run.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnRun;
+                @Run.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnRun;
+                @Run.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnRun;
             }
-            m_Wrapper.m_CharacterControls1ActionsCallbackInterface = instance;
+            m_Wrapper.m_CharacterControlsActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @Run.started += instance.OnRun;
@@ -179,8 +179,8 @@ public class @PlayerInput : IInputActionCollection, IDisposable
             }
         }
     }
-    public CharacterControls1Actions @CharacterControls1 => new CharacterControls1Actions(this);
-    public interface ICharacterControls1Actions
+    public CharacterControlsActions @CharacterControls => new CharacterControlsActions(this);
+    public interface ICharacterControlsActions
     {
         void OnRun(InputAction.CallbackContext context);
     }
