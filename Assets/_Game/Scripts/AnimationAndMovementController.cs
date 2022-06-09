@@ -38,11 +38,9 @@ public class AnimationAndMovementController : MonoBehaviour
         Vector2 inputVector = _playerInput.CharacterControls.Run.ReadValue<Vector2>();
         Vector3 direction = GetDirection3D(inputVector);
 
-        if (direction.magnitude > _deadzone)
+        if (direction.magnitude == 0)
         {
-            _animator.SetBool(_isRunningForwardHash, true);
-            _controller.Move(direction.normalized * _playerSpeed * Time.deltaTime);
-            gameObject.transform.forward = direction;
+            _animator.SetBool(_isRunningForwardHash, false);
         }
         else if (direction.magnitude <= _deadzone)
         {
@@ -51,7 +49,9 @@ public class AnimationAndMovementController : MonoBehaviour
         }
         else
         {
-            _animator.SetBool(_isRunningForwardHash, false);
+            _animator.SetBool(_isRunningForwardHash, true);
+            _controller.Move(direction.normalized * _playerSpeed * Time.deltaTime);
+            gameObject.transform.forward = direction;
         }
     }
 
