@@ -15,8 +15,6 @@ public class AnimationAndMovementController : MonoBehaviour
 
     private int _isRunningForwardHash;
 
-    private bool _joystickDown = false;
-
     private void Awake()
     {
         _playerInput = new PlayerInput();
