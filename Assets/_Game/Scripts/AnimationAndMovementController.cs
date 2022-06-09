@@ -39,18 +39,10 @@ public class AnimationAndMovementController : MonoBehaviour
     private void Update()
     {
         Vector2 inputVector = _playerInput.CharacterControls.Run.ReadValue<Vector2>();
-        Vector3 direction = GetDirection3D(inputVector);
+        RotateInInputDirection(inputVector);
 
-        if (direction.magnitude <= _deadzone && direction.magnitude > 0f)
+        if (inputVector.magnitude > _deadzone)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
-            transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
-            _animator.SetBool(_isRunningForwardHash, false);
-        }
-        else if (direction.magnitude > _deadzone)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
-            transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
             _animator.SetBool(_isRunningForwardHash, true);
             _controller.Move(transform.forward * _playerSpeed * Time.deltaTime);
         }
@@ -60,9 +52,11 @@ public class AnimationAndMovementController : MonoBehaviour
         }
     }
 
-    private Vector3 GetDirection3D(Vector2 inputVector)
+    private void RotateInInputDirection(Vector2 inputVector)
     {
-        return new Vector3(inputVector.x, 0f, inputVector.y);
+        Vector3 direction = new Vector3(inputVector.x, 0f, inputVector.y);
+        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
+        transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
     }
 }
 
