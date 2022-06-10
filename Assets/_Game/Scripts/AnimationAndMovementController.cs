@@ -50,6 +50,8 @@ public class AnimationAndMovementController : MonoBehaviour
         {
             _animator.SetBool(_isRunningForwardHash, false);
         }
+
+        Gravity();
     }
 
     private void RotateInInputDirection(Vector2 inputVector)
@@ -62,6 +64,15 @@ public class AnimationAndMovementController : MonoBehaviour
         Vector3 direction = new Vector3(inputVector.x, 0f, inputVector.y);
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
         transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+    }
+
+    private void Gravity()
+    {
+        float x = transform.position.x;
+        float y = 0f;
+        float z = transform.position.z;
+
+        transform.position = Vector3.Lerp(transform.position, new Vector3(x, y, z), 0.5f);
     }
 
 }

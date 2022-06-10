@@ -36818,7 +36818,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 500854830}
-  m_LocalRotation: {x: 0.07947619, y: 0.15530786, z: -0.012536538, w: 0.9845841}
+  m_LocalRotation: {x: 0.07947623, y: 0.15530786, z: -0.012536545, w: 0.9845841}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -37315,12 +37315,12 @@ MonoBehaviour:
   m_YAxis:
     Value: 0.5
     m_SpeedMode: 0
-    m_MaxSpeed: 6
+    m_MaxSpeed: 3
     m_AccelTime: 0.2
     m_DecelTime: 0.1
     m_InputAxisName: Mouse Y
     m_InputAxisValue: 0
-    m_InvertInput: 0
+    m_InvertInput: 1
     m_MinValue: 0
     m_MaxValue: 1
     m_Wrap: 0
@@ -37339,7 +37339,7 @@ MonoBehaviour:
   m_XAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 300
+    m_MaxSpeed: 200
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
@@ -38116,6 +38116,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 366616158201038436, guid: 2e8a513023791be44a8d987a2d15ead2, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3379613400013293220, guid: 2e8a513023791be44a8d987a2d15ead2, type: 3}
       propertyPath: m_Name
       value: Player
@@ -38173,8 +38177,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3379613400585585584, guid: 2e8a513023791be44a8d987a2d15ead2, type: 3}
-      propertyPath: m_IsKinematic
+      propertyPath: m_Constraints
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379613400585585584, guid: 2e8a513023791be44a8d987a2d15ead2, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379613400585585585, guid: 2e8a513023791be44a8d987a2d15ead2, type: 3}
+      propertyPath: m_Height
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379613400585585585, guid: 2e8a513023791be44a8d987a2d15ead2, type: 3}
+      propertyPath: m_Center.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3379613400585585585, guid: 2e8a513023791be44a8d987a2d15ead2, type: 3}
+      propertyPath: m_SkinWidth
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 8747027999028855300, guid: 2e8a513023791be44a8d987a2d15ead2, type: 3}
       propertyPath: _cam
