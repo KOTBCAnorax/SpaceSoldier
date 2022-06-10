@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class AnimationAndMovementController : MonoBehaviour
 {
-    [SerializeField] private float _playerSpeed = 2.0f;
     [SerializeField] private Animator _animator;
     [SerializeField] private CharacterController _controller;
+    [SerializeField] private Transform _cam;
+    [SerializeField] private float _playerSpeed = 2.0f;
     [SerializeField] private float _deadzoneMax = 0.8f;
     [SerializeField] private float _deadzoneMin = 0.05f;
-    [SerializeField] private Transform _cam;
+    [SerializeField] private float _rotationLerp = 0.2f;
 
     private PlayerInput _playerInput;
 
@@ -62,5 +63,6 @@ public class AnimationAndMovementController : MonoBehaviour
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
         transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
     }
+
 }
 
