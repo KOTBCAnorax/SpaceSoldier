@@ -10,7 +10,7 @@ public class AnimationAndMovementController : MonoBehaviour
     [SerializeField] private float _playerSpeed = 2.0f;
     [SerializeField] private float _deadzoneMax = 0.8f;
     [SerializeField] private float _deadzoneMin = 0.05f;
-    [SerializeField] private float _rotationLerp = 0.2f;
+    [SerializeField] private float _rotationSpeed = 0.2f;
 
     private PlayerInput _playerInput;
 
@@ -62,8 +62,16 @@ public class AnimationAndMovementController : MonoBehaviour
         }
 
         Vector3 direction = new Vector3(inputVector.x, 0f, inputVector.y);
-        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
-        transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
+        Rotate(direction);
+    }
+
+    private void Rotate(Vector3 direction)
+    {
+        float x = transform.rotation.x;
+        float y = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cam.eulerAngles.y;
+        float z = transform.rotation.z;
+        Quaternion targetRotation = Quaternion.Euler(new Vector3(x, y, z));
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _rotationSpeed);
     }
 
     private void Gravity()
