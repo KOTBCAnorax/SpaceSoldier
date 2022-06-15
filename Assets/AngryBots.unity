@@ -37630,7 +37630,7 @@ PrefabInstance:
       objectReference: {fileID: 1603576477}
     - target: {fileID: 8747027999028855300, guid: 2e8a513023791be44a8d987a2d15ead2, type: 3}
       propertyPath: _rotationSpeed
-      value: 0.03
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 8747027999028855300, guid: 2e8a513023791be44a8d987a2d15ead2, type: 3}
       propertyPath: _cameraRotationSpeed

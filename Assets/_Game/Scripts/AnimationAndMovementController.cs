@@ -70,7 +70,7 @@ public class AnimationAndMovementController : MonoBehaviour
         Vector3 direction = new Vector3(movementInput.x, 0f, movementInput.y);
         RotateCharacter(direction);
 
-        if (movementInput.magnitude > _deadzoneMax)
+        if (movementInput.sqrMagnitude > _deadzoneMax)
         {
             _animator.SetBool(_isRunningForwardHash, true);
             _controller.Move(transform.forward * _playerSpeed * Time.deltaTime);
