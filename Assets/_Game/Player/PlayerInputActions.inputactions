@@ -1,5 +1,5 @@
 {
-    "name": "PlayerInput",
+    "name": "PlayerInputActions",
     "maps": [
         {
             "name": "CharacterControls",
@@ -11,7 +11,8 @@
                     "id": "3e9a7065-657f-4ea2-8a0e-b4042826fe97",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Look",
@@ -19,7 +20,17 @@
                     "id": "adfc18c1-1ec3-4e8d-a3ab-d3079b75cff9",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "PointerPosition",
+                    "type": "Value",
+                    "id": "b031b134-e4bc-4640-98ad-355db4c47d58",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -91,7 +102,18 @@
                 },
                 {
                     "name": "",
-                    "id": "5cba56c1-9d01-45fe-9a9f-b49df8446710",
+                    "id": "b7a17dc2-c7f0-404f-a08c-29d8a9a00186",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0fba1ac0-c09f-46f1-a5f7-d4b30581e0d2",
                     "path": "<Pointer>/delta",
                     "interactions": "",
                     "processors": "",
@@ -102,12 +124,12 @@
                 },
                 {
                     "name": "",
-                    "id": "b7a17dc2-c7f0-404f-a08c-29d8a9a00186",
-                    "path": "<Gamepad>/rightStick",
+                    "id": "b3c8f741-f2cf-464a-852e-be7a73bace13",
+                    "path": "<Pointer>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Look",
+                    "action": "PointerPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

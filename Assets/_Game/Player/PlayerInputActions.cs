@@ -44,6 +44,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PointerPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""b031b134-e4bc-4640-98ad-355db4c47d58"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -115,7 +124,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""5cba56c1-9d01-45fe-9a9f-b49df8446710"",
+                    ""id"": ""b7a17dc2-c7f0-404f-a08c-29d8a9a00186"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0fba1ac0-c09f-46f1-a5f7-d4b30581e0d2"",
                     ""path"": ""<Pointer>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -126,12 +146,12 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b7a17dc2-c7f0-404f-a08c-29d8a9a00186"",
-                    ""path"": ""<Gamepad>/rightStick"",
+                    ""id"": ""b3c8f741-f2cf-464a-852e-be7a73bace13"",
+                    ""path"": ""<Pointer>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Look"",
+                    ""action"": ""PointerPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -144,6 +164,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_CharacterControls = asset.FindActionMap("CharacterControls", throwIfNotFound: true);
         m_CharacterControls_Run = m_CharacterControls.FindAction("Run", throwIfNotFound: true);
         m_CharacterControls_Look = m_CharacterControls.FindAction("Look", throwIfNotFound: true);
+        m_CharacterControls_PointerPosition = m_CharacterControls.FindAction("PointerPosition", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -205,12 +226,14 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private ICharacterControlsActions m_CharacterControlsActionsCallbackInterface;
     private readonly InputAction m_CharacterControls_Run;
     private readonly InputAction m_CharacterControls_Look;
+    private readonly InputAction m_CharacterControls_PointerPosition;
     public struct CharacterControlsActions
     {
         private @PlayerInputActions m_Wrapper;
         public CharacterControlsActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Run => m_Wrapper.m_CharacterControls_Run;
         public InputAction @Look => m_Wrapper.m_CharacterControls_Look;
+        public InputAction @PointerPosition => m_Wrapper.m_CharacterControls_PointerPosition;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -226,6 +249,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Look.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnLook;
+                @PointerPosition.started -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnPointerPosition;
+                @PointerPosition.performed -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnPointerPosition;
+                @PointerPosition.canceled -= m_Wrapper.m_CharacterControlsActionsCallbackInterface.OnPointerPosition;
             }
             m_Wrapper.m_CharacterControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -236,6 +262,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
+                @PointerPosition.started += instance.OnPointerPosition;
+                @PointerPosition.performed += instance.OnPointerPosition;
+                @PointerPosition.canceled += instance.OnPointerPosition;
             }
         }
     }
@@ -244,5 +273,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     {
         void OnRun(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnPointerPosition(InputAction.CallbackContext context);
     }
 }
