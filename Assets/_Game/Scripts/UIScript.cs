@@ -8,7 +8,7 @@ public class UIScript : MonoBehaviour
     [SerializeField] private Text _sensitivityText;
     [SerializeField] private Slider _sensitivitySlider;
     [SerializeField] private CanvasGroup _options;
-    [SerializeField] private AnimationAndMovementController _player;
+    [SerializeField] private CharacterController _player;
 
     private bool _optionsHidden = true;
 

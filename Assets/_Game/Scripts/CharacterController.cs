@@ -5,11 +5,11 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
 using TOUCH = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
-public class AnimationAndMovementController : MonoBehaviour
+public class CharacterController : MonoBehaviour
 {
     [Header("Character")]
     [SerializeField] private Animator _animator;
-    [SerializeField] private CharacterController _controller;
+    [SerializeField] private UnityEngine.CharacterController _controller;
 
     [Header("Controls")]
     [SerializeField] private PlayerInputActions _playerInputActions;
@@ -40,9 +40,13 @@ public class AnimationAndMovementController : MonoBehaviour
     private TOUCH _touch0;
     private TOUCH _touch1;
 
-    private int _isRunningForwardHash;
+    private int _isRunningForwardID;
+    private int _isRunningBackwardID;
+    private int _isRunningLeftID;
+    private int _isRunningRightID;
 
     private bool _isHandheld = false;
+    private bool _isAiming = false;
 
     private void Awake()
     {
@@ -68,7 +72,10 @@ public class AnimationAndMovementController : MonoBehaviour
 
     private void Start()
     {
-        _isRunningForwardHash = Animator.StringToHash("isRunningForward");
+        _isRunningForwardID = Animator.StringToHash("isRunningForward");
+        _isRunningBackwardID = Animator.StringToHash("isRunningBackward");
+        _isRunningLeftID = Animator.StringToHash("isRunningLeft");
+        _isRunningRightID = Animator.StringToHash("isRunningRight");
 
         _pointerDeadzoneY = Screen.height;
         _pointerDeadzoneX = Screen.width / 3f;
@@ -81,33 +88,91 @@ public class AnimationAndMovementController : MonoBehaviour
         Gravity();
     }
 
+    public void SetAimActive(bool value)
+    {
+        _isAiming = value;
+    }
+
     private void Run()
     {
         Vector2 movementInput = _playerInput.Run.ReadValue<Vector2>();
         if (movementInput.sqrMagnitude < _deadzoneMin)
         {
-            _animator.SetBool(_isRunningForwardHash, false);
+            ResetAllAnimations();
             return;
         }
 
-        Vector3 direction = new Vector3(movementInput.x, 0f, movementInput.y);
-        RotateCharacter(direction);
+        Vector3 rotationDirection = GetDirectionFromInput(movementInput);
 
+        if (!_isAiming)
+        {
+            RotateCharacter(rotationDirection);
+            MoveWithAimOff(movementInput);
+        }
+        else
+        {
+            MoveWithAimOn(movementInput);
+        }
+    }
+
+    private Vector3 GetDirectionFromInput(Vector2 movementInput)
+    {
+        return new Vector3(movementInput.x, 0f, movementInput.y);
+    }
+
+    private void MoveWithAimOff(Vector2 movementInput)
+    {
         if (movementInput.sqrMagnitude > _deadzoneMax)
         {
-            _animator.SetBool(_isRunningForwardHash, true);
+            _animator.SetBool(_isRunningForwardID, true);
             _controller.Move(transform.forward * _playerSpeed * Time.deltaTime);
         }
         else
         {
-            _animator.SetBool(_isRunningForwardHash, false);
+            _animator.SetBool(_isRunningForwardID, false);
         }
     }
 
-    private void RotateCharacter(Vector3 direction)
+    private void MoveWithAimOn(Vector2 movementInput)
+    {
+        Vector3 movementDirection = _cameraTarget.rotation * GetDirectionFromInput(movementInput);
+
+        if (movementInput.x > _deadzoneMin)
+        {
+            ResetAllAnimations();
+            _animator.SetBool(_isRunningRightID, true);
+        }
+        else if (movementInput.x < -_deadzoneMin)
+        {
+            ResetAllAnimations();
+            _animator.SetBool(_isRunningLeftID, true);
+        }
+        else if (movementInput.y > _deadzoneMin)
+        {
+            ResetAllAnimations();
+            _animator.SetBool(_isRunningForwardID, true);
+        }
+        else if (movementInput.y < -_deadzoneMin)
+        {
+            ResetAllAnimations();
+            _animator.SetBool(_isRunningBackwardID, true);
+        }
+
+        _controller.Move(movementDirection * _playerSpeed * Time.deltaTime);
+    }
+
+    private void ResetAllAnimations()
+    {
+        _animator.SetBool(_isRunningForwardID, false);
+        _animator.SetBool(_isRunningBackwardID, false);
+        _animator.SetBool(_isRunningLeftID, false);
+        _animator.SetBool(_isRunningRightID, false);
+    }
+
+    public void RotateCharacter(Vector3 direction, float cameraAngleModifier = 1.0f)
     {
         float x = transform.rotation.x;
-        float y = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraTarget.eulerAngles.y;
+        float y = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _cameraTarget.eulerAngles.y * cameraAngleModifier;
         float z = transform.rotation.z;
 
         Quaternion targetRotation = Quaternion.Euler(x, y, z);
