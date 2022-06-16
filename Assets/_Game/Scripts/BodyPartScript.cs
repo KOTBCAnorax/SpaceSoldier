@@ -8,7 +8,7 @@ public class BodyPartScript : MonoBehaviour
     [SerializeField] private Material _hitMaterial;
     [SerializeField] private MeshRenderer _meshRenderer;
 
-    private float _cooldown = 0.01f;
+    private float _cooldown = 0.1f;
     private float _lastHitTime;
 
 

@@ -38945,6 +38945,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1000574892}
     - target: {fileID: 1545486917, guid: 2e8a513023791be44a8d987a2d15ead2, type: 3}
+      propertyPath: _bulletHolePrefab
+      value: 
+      objectReference: {fileID: 3856009484720631178, guid: 737dc70251ce988418f210d53bb1401a, type: 3}
+    - target: {fileID: 1545486917, guid: 2e8a513023791be44a8d987a2d15ead2, type: 3}
       propertyPath: _aimColliderLayer.m_Bits
       value: 65
       objectReference: {fileID: 0}
